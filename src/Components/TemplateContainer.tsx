@@ -30,6 +30,17 @@ import {
 } from "./ui/select";
 
 const TemplateContainer = () => {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [submittedData, setSubmittedData] = useState<string[]>([]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    setSubmittedData((prevData) => [...prevData, inputValue]);
+    setInputValue("");
+  };
   const [listItem, setListItem] = useState<string[]>([]);
 
   const handleButtonClick = (text: string) => {
@@ -86,6 +97,8 @@ const TemplateContainer = () => {
                   <Input disabled type="text" placeholder="Media Type: H.264" />
                   <Input
                     type="string"
+                    value={inputValue}
+                    onChange={handleInputChange}
                     placeholder="Location e.g. 100.00.00.100:5000"
                   />
                   <Select>
@@ -102,12 +115,7 @@ const TemplateContainer = () => {
             </DialogHeader>
             <DialogFooter>
               <DialogClose>
-                <Button
-                  onClick={() =>
-                    handleButtonClick("Template 1 Setting List Item")
-                  }
-                  className="bg-[#00AEF3]"
-                >
+                <Button onClick={handleSubmit} className="bg-[#00AEF3]">
                   Apply settings to channel
                 </Button>
               </DialogClose>
@@ -307,9 +315,12 @@ const TemplateContainer = () => {
         </Dialog>
       </div>
       <div className="flex flex-col justify-center items-center gap-2">
-        {listItem.map((listItem, index) => (
-          <div className="text-lg bg-white p-2 border-solid border-2 rounded-lg hover:bg-[#00AEF3]/[.2]">
-            <p key={index}>{listItem}</p>
+        {submittedData.map((data, index) => (
+          <div
+            key={index}
+            className="text-lg bg-white p-2 border-solid border-2 rounded-lg hover:bg-[#00AEF3]/[.2]"
+          >
+            <p>{data}</p>
           </div>
         ))}
       </div>
