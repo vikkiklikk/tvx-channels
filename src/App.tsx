@@ -1,4 +1,3 @@
-import ListTable from "./Components/ListTable";
 import SiminnLogo from "./Components/SiminnLogo";
 import TemplateContainer from "./Components/TemplateContainer";
 
