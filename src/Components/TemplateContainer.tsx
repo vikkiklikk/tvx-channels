@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "./ui/button";
 import {
@@ -28,18 +28,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import ListTableRow from "./ListTableRow";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
 
 const TemplateContainer = () => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [submittedData, setSubmittedData] = useState<string[]>([]);
+  const [submittedData, setSubmittedData] = useState<
+    Array<{ input: string; drm: string }>
+  >([]);
+  const [drmValue, setDrmValue] = useState<string>("");
+
+  const drmHandleSelect = (value: string) => {
+    setDrmValue(value);
+    console.log(value);
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleSubmit = () => {
-    setSubmittedData((prevData) => [...prevData, inputValue]);
+    setSubmittedData((prevData) => [
+      ...prevData,
+      { input: inputValue, drm: drmValue },
+    ]);
     setInputValue("");
+    setDrmValue("");
   };
   const [listItem, setListItem] = useState<string[]>([]);
 
@@ -84,13 +105,13 @@ const TemplateContainer = () => {
                   Configure your settings and press apply to save
                 </p>
                 <div className="flex flex-col gap-2 w-[16rem]">
-                  <Select>
+                  <Select onValueChange={drmHandleSelect}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="DRM vendor" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="vmx">VMX</SelectItem>
-                      <SelectItem value="clear">Clear</SelectItem>
+                      <SelectItem value="VMX">VMX</SelectItem>
+                      <SelectItem value="Clear">Clear</SelectItem>
                     </SelectContent>
                   </Select>
                   <Input disabled type="text" placeholder="Pökkun: Multicast" />
@@ -100,6 +121,7 @@ const TemplateContainer = () => {
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder="Location e.g. 100.00.00.100:5000"
+                    required
                   />
                   <Select>
                     <SelectTrigger className="w-[180px]">
@@ -314,15 +336,33 @@ const TemplateContainer = () => {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex flex-col justify-center items-center gap-2">
-        {submittedData.map((data, index) => (
-          <div
-            key={index}
-            className="text-lg bg-white p-2 border-solid border-2 rounded-lg hover:bg-[#00AEF3]/[.2]"
-          >
-            <p>{data}</p>
-          </div>
-        ))}
+      <div className="flex flex-col justify-center relative">
+        {submittedData.length > 0 && (
+          <Table className="bg-white">
+            <TableCaption>List of configurations.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Template</TableHead>
+                <TableHead>DRM</TableHead>
+                <TableHead>Pökkun</TableHead>
+                <TableHead>Media Type</TableHead>
+                <TableHead>Ticket Type</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Resolution</TableHead>
+                <TableHead>DRM ID</TableHead>
+                <TableHead>epgID</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {submittedData.map((data, index) => (
+                <div key={index}>
+                  <ListTableRow drmValue={data.drm} inputValue={data.input} />
+                </div>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   );

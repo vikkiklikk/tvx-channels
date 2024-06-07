@@ -1,3 +1,4 @@
+import ListTableRow from "./ListTableRow";
 import {
   Table,
   TableBody,
@@ -24,18 +25,7 @@ const ListTable = () => {
           <TableHead className="text-right">DRM ID</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">Multicast</TableCell>
-          <TableCell>DRM</TableCell>
-          <TableCell>Multicast</TableCell>
-          <TableCell>H.264</TableCell>
-          <TableCell>None</TableCell>
-          <TableCell>256.10.1.300:3000</TableCell>
-          <TableCell>HD</TableCell>
-          <TableCell className="text-right">None</TableCell>
-        </TableRow>
-      </TableBody>
+      <TableBody></TableBody>
     </Table>
   );
 };
