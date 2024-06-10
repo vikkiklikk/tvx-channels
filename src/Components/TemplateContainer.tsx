@@ -41,13 +41,17 @@ import {
 const TemplateContainer = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [submittedData, setSubmittedData] = useState<
-    Array<{ input: string; drm: string }>
+    Array<{ input: string; drm: string; res: string }>
   >([]);
   const [drmValue, setDrmValue] = useState<string>("");
+  const [resValue, setResValue] = useState<string>("");
 
   const drmHandleSelect = (value: string) => {
     setDrmValue(value);
-    console.log(value);
+  };
+
+  const resHandleSelect = (value: string) => {
+    setResValue(value);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +61,7 @@ const TemplateContainer = () => {
   const handleSubmit = () => {
     setSubmittedData((prevData) => [
       ...prevData,
-      { input: inputValue, drm: drmValue },
+      { input: inputValue, drm: drmValue, res: resValue },
     ]);
     setInputValue("");
     setDrmValue("");
@@ -94,6 +98,9 @@ const TemplateContainer = () => {
                 <p>
                   <strong>Resolution:</strong> SD/HD
                 </p>
+                <p>
+                  <strong>epgID:</strong> e.g. 1234
+                </p>
               </CardContent>
             </Card>
           </DialogTrigger>
@@ -123,13 +130,13 @@ const TemplateContainer = () => {
                     placeholder="Location e.g. 100.00.00.100:5000"
                     required
                   />
-                  <Select>
+                  <Select onValueChange={resHandleSelect}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Resolution" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="sd">SD</SelectItem>
-                      <SelectItem value="hd">HD</SelectItem>
+                      <SelectItem value="SD">SD</SelectItem>
+                      <SelectItem value="HD">HD</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -169,6 +176,9 @@ const TemplateContainer = () => {
                 </p>
                 <p>
                   <strong>Resolution:</strong> SD/HD
+                </p>
+                <p>
+                  <strong>epgID:</strong> e.g. 1234
                 </p>
               </CardContent>
             </Card>
@@ -252,6 +262,9 @@ const TemplateContainer = () => {
                 </p>
                 <p>
                   <strong>Resolution:</strong> SD/HD
+                </p>
+                <p>
+                  <strong>epgID:</strong> e.g. 1234
                 </p>
                 <p>
                   <strong>DRM Content ID:</strong> sjosim264
@@ -357,7 +370,11 @@ const TemplateContainer = () => {
             <TableBody>
               {submittedData.map((data, index) => (
                 <div key={index}>
-                  <ListTableRow drmValue={data.drm} inputValue={data.input} />
+                  <ListTableRow
+                    drmValue={data.drm}
+                    inputValue={data.input}
+                    resValue={data.res}
+                  />
                 </div>
               ))}
             </TableBody>

@@ -4,9 +4,14 @@ import { MdEdit, MdDelete } from "react-icons/md";
 interface ListTableProps {
   drmValue: string;
   inputValue: string;
+  resValue: string;
 }
 
-const ListTableRow: React.FC<ListTableProps> = ({ drmValue, inputValue }) => {
+const ListTableRow: React.FC<ListTableProps> = ({
+  drmValue,
+  inputValue,
+  resValue,
+}) => {
   return (
     <TableRow>
       <TableCell>Multicast</TableCell>
@@ -15,7 +20,7 @@ const ListTableRow: React.FC<ListTableProps> = ({ drmValue, inputValue }) => {
       <TableCell>H.264</TableCell>
       <TableCell>None</TableCell>
       <TableCell>{inputValue}</TableCell>
-      <TableCell>HD</TableCell>
+      <TableCell>{resValue}</TableCell>
       <TableCell>None</TableCell>
       <TableCell>2345</TableCell>
       <TableCell className="flex row gap-4">
