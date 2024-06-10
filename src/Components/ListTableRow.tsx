@@ -6,6 +6,7 @@ interface ListTableProps {
   inputValue: string;
   resValue: string;
   epgValue: string;
+  templateValue: string;
 }
 
 const ListTableRow: React.FC<ListTableProps> = ({
@@ -13,10 +14,11 @@ const ListTableRow: React.FC<ListTableProps> = ({
   inputValue,
   resValue,
   epgValue,
+  templateValue,
 }) => {
   return (
     <TableRow>
-      <TableCell>Multicast</TableCell>
+      <TableCell>{templateValue}</TableCell>
       <TableCell>{drmValue}</TableCell>
       <TableCell>Multicast</TableCell>
       <TableCell>H.264</TableCell>

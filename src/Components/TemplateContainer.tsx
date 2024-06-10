@@ -42,10 +42,18 @@ const TemplateContainer = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [epgValue, setEpgValue] = useState<string>("");
   const [submittedData, setSubmittedData] = useState<
-    Array<{ input: string; drm: string; res: string; epg: string }>
+    Array<{
+      template: string;
+      input: string;
+      drm: string;
+      res: string;
+      epg: string;
+    }>
   >([]);
   const [drmValue, setDrmValue] = useState<string>("");
   const [resValue, setResValue] = useState<string>("");
+
+  const [templateValue, setTemplateValue] = useState<string>("");
 
   const drmHandleSelect = (value: string) => {
     setDrmValue(value);
@@ -66,12 +74,19 @@ const TemplateContainer = () => {
   const handleSubmit = () => {
     setSubmittedData((prevData) => [
       ...prevData,
-      { input: inputValue, drm: drmValue, res: resValue, epg: epgValue },
+      {
+        input: inputValue,
+        drm: drmValue,
+        res: resValue,
+        epg: epgValue,
+        template: templateValue,
+      },
     ]);
     setInputValue("");
     setDrmValue("");
     setEpgValue("");
     setResValue("");
+    setTemplateValue("");
   };
   const [listItem, setListItem] = useState<string[]>([]);
 
@@ -119,7 +134,12 @@ const TemplateContainer = () => {
                   Configure your settings and press apply to save
                 </p>
                 <div className="flex flex-col gap-2 w-[16rem]">
-                  <Select onValueChange={drmHandleSelect}>
+                  <Select
+                    onValueChange={() => {
+                      setTemplateValue("Multicast");
+                      drmHandleSelect;
+                    }}
+                  >
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="DRM vendor" />
                     </SelectTrigger>
@@ -393,6 +413,7 @@ const TemplateContainer = () => {
                     inputValue={data.input}
                     resValue={data.res}
                     epgValue={data.epg}
+                    templateValue={data.template}
                   />
                 </div>
               ))}
