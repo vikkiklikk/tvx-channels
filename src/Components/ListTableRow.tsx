@@ -5,12 +5,14 @@ interface ListTableProps {
   drmValue: string;
   inputValue: string;
   resValue: string;
+  epgValue: string;
 }
 
 const ListTableRow: React.FC<ListTableProps> = ({
   drmValue,
   inputValue,
   resValue,
+  epgValue,
 }) => {
   return (
     <TableRow>
@@ -22,7 +24,7 @@ const ListTableRow: React.FC<ListTableProps> = ({
       <TableCell>{inputValue}</TableCell>
       <TableCell>{resValue}</TableCell>
       <TableCell>None</TableCell>
-      <TableCell>2345</TableCell>
+      <TableCell>{epgValue}</TableCell>
       <TableCell className="flex row gap-4">
         <MdEdit className="cursor-pointer hover:scale-110" size="18" />
         <MdDelete

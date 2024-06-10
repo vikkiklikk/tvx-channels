@@ -40,8 +40,9 @@ import {
 
 const TemplateContainer = () => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [epgValue, setEpgValue] = useState<string>("");
   const [submittedData, setSubmittedData] = useState<
-    Array<{ input: string; drm: string; res: string }>
+    Array<{ input: string; drm: string; res: string; epg: string }>
   >([]);
   const [drmValue, setDrmValue] = useState<string>("");
   const [resValue, setResValue] = useState<string>("");
@@ -58,13 +59,19 @@ const TemplateContainer = () => {
     setInputValue(event.target.value);
   };
 
+  const handleEpgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEpgValue(event.target.value);
+  };
+
   const handleSubmit = () => {
     setSubmittedData((prevData) => [
       ...prevData,
-      { input: inputValue, drm: drmValue, res: resValue },
+      { input: inputValue, drm: drmValue, res: resValue, epg: epgValue },
     ]);
     setInputValue("");
     setDrmValue("");
+    setEpgValue("");
+    setResValue("");
   };
   const [listItem, setListItem] = useState<string[]>([]);
 
@@ -139,15 +146,26 @@ const TemplateContainer = () => {
                       <SelectItem value="HD">HD</SelectItem>
                     </SelectContent>
                   </Select>
+                  <Input
+                    type="string"
+                    value={epgValue}
+                    onChange={handleEpgChange}
+                    placeholder="epgID e.g. 1234"
+                    required
+                  />
                 </div>
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <DialogClose>
-                <Button onClick={handleSubmit} className="bg-[#00AEF3]">
-                  Apply settings to channel
-                </Button>
-              </DialogClose>
+              {inputValue === "" ? (
+                <Button className="bg-[#ff4f4f]">Fill in all forms</Button>
+              ) : (
+                <DialogClose>
+                  <Button onClick={handleSubmit} className="bg-[#00AEF3]">
+                    Apply settings to channel
+                  </Button>
+                </DialogClose>
+              )}
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -374,6 +392,7 @@ const TemplateContainer = () => {
                     drmValue={data.drm}
                     inputValue={data.input}
                     resValue={data.res}
+                    epgValue={data.epg}
                   />
                 </div>
               ))}
